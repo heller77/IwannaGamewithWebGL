@@ -12,6 +12,7 @@ class OrenoGameInput {
         );
         targetCanvas.addEventListener("keyup",
             event => {
+                console.log("keyup");
                 this.keydown[event.key] = false;
             }
         );
@@ -25,7 +26,6 @@ class OrenoGameInput {
      */
     static GetKey(code) {
         if (this.keydown[code] == undefined) {
-            console.log("undefined");
             return false;
         }
         return this.keydown[code];

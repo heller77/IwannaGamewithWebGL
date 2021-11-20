@@ -4,6 +4,7 @@ class GameObject {
         this.scale = scale;
         this.programinfo = programinfo;
         this.buffer = buffer;
+        this.perRotate = 0;
         console.log("gameobjct instance");
     }
 
@@ -25,8 +26,7 @@ class GameObject {
     }
 
     draw(gl) {
-        console.log(this.programinfo);
-        drawScene(gl, this.programinfo, this.buffer, this.position, this.scale);
+        drawScene(gl, this.programinfo, this.buffer, this.position, this.scale, this.perRotate);
     }
 
     /**
@@ -36,5 +36,9 @@ class GameObject {
         this.position[0] += motion[0];
         this.position[1] += motion[1];
         this.position[2] += motion[2];
+    }
+
+    setPerRotate(perRotate) {
+        this.perRotate = perRotate;
     }
 }
