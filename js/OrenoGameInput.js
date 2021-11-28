@@ -8,6 +8,14 @@ class OrenoGameInput {
         targetCanvas.addEventListener("keydown",
             event => {
                 this.keydown[event.key] = true;
+                var code = event.keyCode;
+                switch (code) {
+                    case 37: // ←
+                    case 38: // ↑
+                    case 39: // →
+                    case 40: // ↓
+                        event.preventDefault();
+                }
             }
         );
         targetCanvas.addEventListener("keyup",
@@ -41,10 +49,10 @@ class OrenoGameInput {
         switch (keyAxis) {
             case Axis.Horizontal: {
                 var Horizontal = 0;
-                if (OrenoGameInput.GetKey(keycode.A)) {
+                if (OrenoGameInput.GetKey(keycode.A) || OrenoGameInput.GetKey(keycode.ArrowLeft)) {
                     Horizontal -= 1;
                 }
-                if (OrenoGameInput.GetKey(keycode.D)) {
+                if (OrenoGameInput.GetKey(keycode.D) || OrenoGameInput.GetKey(keycode.ArrowRight)) {
                     Horizontal += 1;
                 }
                 return Horizontal;
@@ -52,10 +60,10 @@ class OrenoGameInput {
             }
             case Axis.Vertical: {
                 var Vertical = 0;
-                if (OrenoGameInput.GetKey(keycode.W)) {
+                if (OrenoGameInput.GetKey(keycode.W) || OrenoGameInput.GetKey(keycode.ArrowUp)) {
                     Vertical += 1;
                 }
-                if (OrenoGameInput.GetKey(keycode.S)) {
+                if (OrenoGameInput.GetKey(keycode.S) || OrenoGameInput.GetKey(keycode.ArrowDown)) {
                     Vertical -= 1;
                 }
                 return Vertical;
@@ -77,6 +85,11 @@ var keycode = {
     W: "w",
     S: "s",
     D: "d",
+    ArrowLeft: "ArrowLeft",
+    ArrowRight: "ArrowRight",
+    ArrowUp: "ArrowUp",
+    ArrowDown: "ArrowDown",
+
 };
 /**
  * Axisにenum

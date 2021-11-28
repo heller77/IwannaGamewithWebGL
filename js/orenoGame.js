@@ -6,7 +6,7 @@ setInterval(loop, 50);
 //
 var gl;
 var player1Object;
-var loopFlag = new loop(true);
+var loopFlag = new Boolean(true);
 var gameobjectList = [];
 
 
@@ -26,7 +26,7 @@ function main() {
 
     const canvas = document.querySelector("#glcanvas");
     // Initialize the GL context
-    gl = canvas.getContext("webgl");
+    gl = canvas.getContext("webgl2");
     OrenoGameInput.init(canvas);
 
 
@@ -39,15 +39,16 @@ function main() {
         );
         return;
     }
+    var reader = new FileReader();
 
     //頂点シェーダー
     const vsSource = `
     attribute vec4 aVertexPosition;
     attribute vec4 aVertexColor;
-    
+
     uniform mat4 uModelViewMatrix;
     uniform mat4 uProjectionMatrix;
-    
+
     varying lowp vec4 vColor;
     void main() {
         gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
@@ -58,6 +59,7 @@ function main() {
     const fsSource = `
     varying lowp vec4 vColor;
     void main() {
+    
       gl_FragColor = vColor;
     }
   `;
@@ -113,7 +115,7 @@ function main() {
     // gl.clearColor(0.0, 0.0, 0.0, 1.0);
     // // 指定されたクリアカラーでカラーバッファをクリアします
     // gl.clear(gl.COLOR_BUFFER_BIT);
-};
+}
 
 function loop() {
 
@@ -240,7 +242,7 @@ function initBuffers(gl) {
     ];
     var generatedColors = [];
     for (j = 0; j < 6; j++) {
-        var c = colors[j];
+        const c = colors[j];
         generatedColors = generatedColors.concat(c, c, c, c);
     }
     const colorbuffer = gl.createBuffer();
@@ -301,15 +303,15 @@ function drawScene(gl, programInfo, buffers, move, scale, perRotate = 0.006) {
     //     modelViewMatrix,     // matrix to translate
     //     [-0.0, 0.0, -3.0]);  // amount to translate
 
+
     mat4.translate(modelViewMatrix,     // destination matrix
         modelViewMatrix,     // matrix to translate
         move);  // amount to translate
+    mat4.scale(modelViewMatrix, modelViewMatrix, scale);
     mat4.rotate(modelViewMatrix,  // destination matrix
         modelViewMatrix,  // matrix to rotate
         cubeRotation,// amount to rotate in radians
         [0, 1, 0]);       // axis to rotate around (X)
-    mat4.scale(modelViewMatrix, modelViewMatrix, scale);
-
 
     // Tell WebGL how to pull out the positions from the position
     // buffer into the vertexPosition attribute.
@@ -372,5 +374,5 @@ function drawScene(gl, programInfo, buffers, move, scale, perRotate = 0.006) {
         // gl.drawArrays(gl.TRIANGLE_STRIP, offset, vertexCount);
         gl.drawElements(gl.TRIANGLES, vertexCount, gl.UNSIGNED_SHORT, offset);
     }
-    cubeRotation += perRotate;
+    cubeRotation += 0.01;
 }
