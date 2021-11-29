@@ -13,6 +13,7 @@ var gameobjectList = [];
 var cubeRotation = 0.0;
 
 function main() {
+
     var startorStopButton = document.getElementById("startORStopButton");
     startorStopButton.addEventListener("click", () => {
             if (loopFlag) {
@@ -93,15 +94,22 @@ function main() {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
 
+    const loader = new GLTFLoader();
+    loader.load("./Resources/untitled.gltf",
+        function (gltf) {
+            console.log(gltf.scene);
+        });
+
+
     //buffer
     var buffers = initBuffers(gl);
     var position = [-1.0, 0.0, -3.0];
     var scale = [0.2, 0.2, 0.2];
-    player1Object = new GameObject(position, scale, programInfo, buffers);
-    player2Object = new GameObject([1, 0, -3], scale, programInfo, buffers);
+    let player1Object = new GameObject(position, scale, programInfo, buffers);
+    let player2Object = new GameObject([1, 0, -3], scale, programInfo, buffers);
 
 
-    yuka = new GameObject([0, -1, -3], [1.2, 0.2, 0.4], programInfo, buffers);
+    let yuka = new GameObject([0, -1, -3], [1.2, 0.2, 0.4], programInfo, buffers);
     player2Object.init(gl, vsSource, fsSource2);
 
 
