@@ -27,7 +27,7 @@ function main() {
 
     const canvas = document.querySelector("#glcanvas");
     // Initialize the GL context
-    gl = canvas.getContext("webgl2");
+    gl = canvas.getContext("webgl");
     OrenoGameInput.init(canvas);
 
 
@@ -94,19 +94,12 @@ function main() {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
 
-    const loader = new GLTFLoader();
-    loader.load("./Resources/untitled.gltf",
-        function (gltf) {
-            console.log(gltf.scene);
-        });
-
-
     //buffer
     var buffers = initBuffers(gl);
     var position = [-1.0, 0.0, -3.0];
     var scale = [0.2, 0.2, 0.2];
-    let player1Object = new GameObject(position, scale, programInfo, buffers);
-    let player2Object = new GameObject([1, 0, -3], scale, programInfo, buffers);
+    player1Object = new GameObject(position, scale, programInfo, buffers);
+    player2Object = new GameObject([1, 0, -3], scale, programInfo, buffers);
 
 
     let yuka = new GameObject([0, -1, -3], [1.2, 0.2, 0.4], programInfo, buffers);
